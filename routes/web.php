@@ -46,7 +46,7 @@ Route::middleware(['auth'])->prefix('client')->name('client.')->group(function (
     Route::post('/tickets/{ticket}/messages',  [App\Http\Controllers\Client\TicketController::class, 'addMessage'])->name('tickets.message');
 
     // Payment
-    Route::post('/payment/initiate', [App\Http\Controllers\Client\PaymentController::class, 'initiate'])->name('payment.initiate');
+    Route::match(['get','post'], '/payment/initiate', [App\Http\Controllers\Client\PaymentController::class, 'initiate'])->name('payment.initiate');
     Route::post('/payment/verify',   [App\Http\Controllers\Client\PaymentController::class, 'verify'])->name('payment.verify');
     Route::get('/payment/success',   [App\Http\Controllers\Client\PaymentController::class, 'success'])->name('payment.success');
     Route::get('/payment/failed',    [App\Http\Controllers\Client\PaymentController::class, 'failed'])->name('payment.failed');

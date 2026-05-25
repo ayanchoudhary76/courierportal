@@ -74,6 +74,22 @@
         <a href="{{ route('client.bookings') }}" class="btn btn-outline">← All Bookings</a>
     </div>
 
+    {{-- Pay Now button (only for pending online payments) --}}
+    @if($booking->payment_status === 'pending' && $booking->payment_mode === 'online')
+    <div style="margin-bottom:22px;">
+        <form method="GET" action="{{ route('client.payment.initiate') }}">
+            <input type="hidden" name="awb_number" value="{{ $booking->awb_number }}">
+            <button type="submit"
+                style="display:inline-flex; align-items:center; gap:8px; padding:13px 28px;
+                       background:linear-gradient(135deg,#16a34a,#15803d); color:#fff; border:none;
+                       border-radius:10px; font-size:15px; font-weight:700; cursor:pointer;
+                       box-shadow:0 4px 14px rgba(22,163,74,0.35); transition:opacity 0.15s;">
+                💳 Pay Now &mdash; &#8377;{{ number_format($booking->total_amount, 2) }}
+            </button>
+        </form>
+    </div>
+    @endif
+
     {{-- 3-column info --}}
     <div class="info-grid">
         <div class="info-card">
